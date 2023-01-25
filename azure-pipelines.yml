@@ -24,8 +24,8 @@ stages:
         echo Add other tasks to build, test, and deploy your project.
         echo See https://aka.ms/yaml
       displayName: 'Run a multi-line script'
-- stage: BuildDockerImage
-  displayName: Building-image
+- stage: BuildPUSHDockerImage
+  displayName: Building-Pushing-image
   jobs:
   - job: Buildjob
     pool:
@@ -34,18 +34,6 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'MYNEWDOCKER'
-        command: 'build'
+        repository: 'venuchgit / reacjsapp'
+        command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-
-- stage: PushDockerImage
-  displayName: Pushing-image
-  jobs:
-  - job: Pushjob
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'MYNEWDOCKER'
-        repository: 'venuchgit/reacjsapp'
-        command: 'push'
