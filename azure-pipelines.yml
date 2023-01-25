@@ -36,3 +36,16 @@ stages:
         containerRegistry: 'MYNEWDOCKER'
         command: 'build'
         Dockerfile: '**/Dockerfile'
+
+- stage: PushDockerImage
+  displayName: Pushing-image
+  jobs:
+  - job: Pushjob
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'MYNEWDOCKER'
+        repository: 'venuchgit/reacjsapp'
+        command: 'push'
